@@ -116,6 +116,10 @@ $ sudo chmod 755 /etc/init.d/php-fpm
 $ sudo cp /usr/local/etc/php-fpm.conf.default /usr/local/etc/php-fpm.conf
 $ sudo cp /usr/local/etc/php-fpm.d/www.conf.default /usr/local/etc/php-fpm.d/www.conf
 ```
+Not sure why but we have to change the last line of: /usr/local/etc/php-fpm.conf to:
+```
+include=etc/php-fpm.d/*.conf
+```
 To see if it works we can run:
 ```bash
 $ sudo service php-fpm start
