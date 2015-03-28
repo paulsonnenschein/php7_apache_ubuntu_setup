@@ -3,7 +3,7 @@ My workflow to get PHP7 running with apache on ubuntu via php-fpm.
 
 From an empty folder via an empty Ubuntu Vagrantbox to an Apache server thats running PHP7.
 
-Warning: Youll need Vagrant and quite some bandwith for this :)
+Warning: You'll need Vagrant and quite some bandwidth for this :)
 
 ## VM setup
 Initializing the box (from a base ubuntu/trusty64)
@@ -12,8 +12,8 @@ $ mkdir php7
 $ cd php7
 $ vagrant init ubuntu/trusty64
 ```
-Now you should edit the Vagrantfile to add an ip adress and some more ram;
-Just comment out the folloing lines and edit them to something like this:
+Now you should edit the Vagrantfile to add an IP address and some more RAM.
+Just comment out the following lines and edit them to something like this:
 ```
 config.vm.network "private_network", ip: "192.168.7.8"
 config.vm.provider "virtualbox" do |vb|
@@ -24,22 +24,22 @@ Now run: (this takes a while)
 ```bash
 $ vagrant up
 ```
-And once thats done:
+And once that's done:
 ```bash
 $ vagrant ssh
 ```
 
 ## Inside our VM
 ### Installing dependencies
-First we need some git:
+First we need git:
 ```bash
 $ sudo apt-get install git
 ```
 Now we can get the php-src repo: (this takes a while as well)
 ```bash
-$ git clone https://github.com/php/php-src.git
+$ git clone https://github.com/php/php-src.git --depth=1
 ```
-Once inside well install all the dependecies we need to actually compile any php source code:
+Once inside, we'll install all the dependecies we need to actually compile any php source code:
 ```bash
 $ cd php-src
 $ sudo apt-get install build-essential autoconf automake libtool bison re2c
@@ -54,7 +54,7 @@ re2c: is used to generate the PHP lexer
 ([Stolen from the PHP internals Book](http://www.phpinternalsbook.com/build_system/building_php.html))
 
 ### Installing extension dependencies
-Everybody needs a diffrent set of extensions in their built, but i put together a list that I think is pretty solid.
+Everybody needs a different set of extensions in their build, but I put together a list that I think is pretty solid.
 We first need the following development packages:
 ```bash
 $ sudo apt-get install libxml2-dev libssl-dev libcurl4-openssl-dev libjpeg-dev libpng12-dev libc-client-dev libmcrypt-dev libxslt1-dev
@@ -68,9 +68,9 @@ $ ./buildconf
 ```
 This will generate the necessary configuration files / headers etc (--force flag will clear configuration caches).
 
-Now we are going to run ./configure. Here comes the Part where everyone will pass a set of diffrent flags (for a list of all of the run: ./configure --help).
+Now we are going to run ./configure. Here comes the Part where everyone will pass a set of different flags (for a list of all of the run: ./configure --help).
 
-I used [this site](http://zgadzaj.com/how-to-install-php-53-and-52-together-on-ubuntu-1204) a lot to find out what  I had to install for certain flags / error messages.
+I used [this site](http://zgadzaj.com/how-to-install-php-53-and-52-together-on-ubuntu-1204) a lot to find out what I had to install for certain flags / error messages.
 
 Here is my / our version (that needs the packages listed above in Installing extension dependencies):
 ```bash
@@ -109,7 +109,7 @@ $ sudo make install
 ```
 Now we have php installed (into /usr/local) and can run php -v to verify that =D
 ### Setting up PHP-FPM
-To use PHP-FPM we just have to copy a few configuartion files around:
+To use PHP-FPM we just have to copy a few configuration files around:
 ```bash
 $ sudo cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
 $ sudo chmod 755 /etc/init.d/php-fpm
@@ -125,9 +125,9 @@ To see if it works we can run:
 $ sudo service php-fpm start
 ```
 ### Setting up Apache with PHP-FPM
-Now since im used to working with apache im using it as an example here, but Im guessing you can use any php5 guide for setting up nginx with php-fpm as well.
+Now since I'm used to working with apache I'm using it as an example here, but you can use any php5 guide for setting up nginx with php-fpm as well.
 
-To install verything we first need to uncomment a few package sources from: /etc/apt/sources.list
+To install everything, we first need to uncomment a few package sources from: /etc/apt/sources.list
 You should comment out the following lines:
 ```
 deb http://archive.ubuntu.com/ubuntu trusty multiverse
@@ -142,9 +142,9 @@ $ sudo apt-get update
 $ sudo apt-get install apache2-mpm-worker libapache2-mod-fastcgi
 $ sudo a2enmod actions fastcgi alias
 ```
-(That last command enabled fastcgi and alias btw...)
+(That last command enables the fastcgi and alias modules in apache).
 
-Now we add the following somwhere into the /etc/apache2/apache2.conf file:
+Now we add the following somewhere into the /etc/apache2/apache2.conf file:
 ```
 <IfModule mod_fastcgi.c>
         AddHandler php5-fcgi .php
@@ -153,7 +153,7 @@ Now we add the following somwhere into the /etc/apache2/apache2.conf file:
         FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -host 127.0.0.1:9000 -pass-header Authorization
 </IfModule>
 ```
-But because apache thinks that /php5-fcgi is a directory it blocks it by default, so we have to delete the following block from the file:
+But Apache thinks that /php5-fcgi is a directory it blocks it by default. So we have to delete the following block from the file:
 ```
 <Directory />
         .........
@@ -173,4 +173,4 @@ phpinfo();
 ```
 You should now see the phpinfo page when you visit 192.168.7.8/test.php on your host pc.
 
-If did something wrong or generally made and mistakese on my way, please tell me, im still just learning all this stuff =D
+If did something wrong or generally made and mistakes, please tell me, I'm still just learning all this stuff =D
