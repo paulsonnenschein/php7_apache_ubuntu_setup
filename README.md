@@ -4,7 +4,17 @@ My workflow to get PHP7 running with apache on ubuntu via php-fpm.
 From an empty folder via an empty Ubuntu Vagrantbox to an Apache server thats running PHP7.
 
 Warning: You'll need Vagrant and quite some bandwidth for this :)
+# Automatic setup
+Just clone this repository and run vagrant up in it (Go grab a coffe or something, this will take a while...):
+```bash
+$ git clone https://github.com/cookiecavekeeper/php7_apache_ubuntu_setup.git
+$ cd php7_apache_ubuntu_setup
+$ vagrant up
+```
+And after a few minutes you are done!
 
+# Manual Setup
+Here we will do everything the scripts above do, but manually (with a bit of explanation).
 ## VM setup
 Initializing the box (from a base ubuntu/trusty64)
 ```bash
