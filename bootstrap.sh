@@ -52,6 +52,9 @@ echo 'include=etc/php-fpm.d/*.conf' | sudo tee -a /usr/local/etc/php-fpm.conf
 
 sudo service php-fpm start
 
+# Start php-fpm on startup
+sudo update-rc.d php-fpm defaults
+
 # Setting up Apache
 # Not quite commenting out but it works:
 echo -e 'deb http://archive.ubuntu.com/ubuntu trusty multiverse \n' | sudo tee -a /etc/apt/sources.list
