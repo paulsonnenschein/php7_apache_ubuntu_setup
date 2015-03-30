@@ -134,6 +134,10 @@ To see if it works we can run:
 ```bash
 $ sudo service php-fpm start
 ```
+Since we want php-fpm to start on startup we run:
+```bash
+$ sudo update-rc.d php-fpm defaults
+```
 ### Setting up Apache with PHP-FPM
 Now since I'm used to working with apache I'm using it as an example here, but you can use any php5 guide for setting up nginx with php-fpm as well.
 
